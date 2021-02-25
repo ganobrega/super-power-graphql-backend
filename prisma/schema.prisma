@@ -1,0 +1,94 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../prisma/generated/type-graphql"
+}
+
+//**
+// USER
+//**
+
+enum UserPermission {
+  USER
+  ADMIN
+  SUPPORT
+}
+
+model User {
+  id         String         @id @default(cuid())
+  email      String         @unique
+  name       String
+  password   String
+  phone      String
+  permission UserPermission
+
+  // Dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  posts    Post[]
+  comments PostComment[]
+}
+
+//**
+// POST
+//**
+
+model Post {
+  id        String  @id @default(cuid())
+  published Boolean @default(false)
+  text      String?
+  author    User    @relation(fields: [userId], references: [id])
+
+  // Dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  images   PostImage[]
+  comments PostComment[]
+
+  // Foreign Keys
+  userId String
+}
+
+enum PostImageMimeType {
+  PNG
+  JPG
+  GIF
+}
+
+model PostImage {
+  id     String @id @default(uuid())
+  source String
+  post   Post?  @relation(fields: [postId], references: [id])
+
+  // Foreign Keys
+  postId String?
+}
+
+model PostComment {
+  id   String @id @default(dbgenerated(""))
+  text String
+
+  // Dates
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  author User  @relation(fields: [userId], references: [id])
+  post   Post? @relation(fields: [postId], references: [id])
+
+  // Foreign Keys
+  postId String?
+  userId String
+}

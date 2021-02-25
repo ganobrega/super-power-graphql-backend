@@ -23,20 +23,15 @@ import AuthenticationUserResolver from '@resolvers/AuthenticationUserResolver';
 
 // Interfaces
 import { IContext } from '@interfaces/index';
+import { UserCrudResolver } from '../prisma/generated/type-graphql';
 
 (async () => {
   try {
     const schema = await buildSchema({
       resolvers: [
         /* User */
-        AggregateUserResolver,
-        FindManyUserResolver,
-        FindUniqueUserResolver,
-        UserRelationsResolver,
-        CreateUserResolver,
-        AuthenticationUserResolver,
+        UserCrudResolver,
 
-        ,
         /* Post */
         PostRelationsResolver,
         PostCrudResolver,

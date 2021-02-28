@@ -4,6 +4,8 @@
 <h1 style="text-align: center;">Super Power GraphQL Backend</h1>
 <p style="text-align: center;">This is a Super Power GraphQL Backend with Prisma and Typescript</p>
 
+[![](https://raw.githubusercontent.com/BoostIO/issuehunt-materials/master/v1/issuehunt-shield-v1.svg)](https://issuehunt.io/r/ganobrega/super-power-graphql-backend/invite/WVbpk70yVv)
+
 ## 🤷🏽 Why?
 
 This is a production ready for a modern architecture with **Typescript**, **GraphQL** and **Prisma**.
